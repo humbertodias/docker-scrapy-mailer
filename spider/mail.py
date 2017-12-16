@@ -1,6 +1,5 @@
 import sys, os, datetime
 
-now = datetime.datetime.now()
   
 # Reading data back
 def loadJSON(fileName):
@@ -15,7 +14,7 @@ def loadTemplate(templateFileName, outFileName, vagas):
   # Template
   from mako.template import Template
   mytemplate = Template(filename=templateFileName)
-  mytemplaterendered = mytemplate.render(vagas=vagas, now=now)
+  mytemplaterendered = mytemplate.render(vagas=vagas, now=datetime.datetime.now())
   if sys.version_info.major < 3:
     mytemplaterendered = str(mytemplaterendered.encode("utf-8").strip())
   else:
@@ -70,9 +69,9 @@ def sendMail(mail_smtp_host, mail_smtp_port, gmail_user, gmail_pwd, to, subject,
        mailServer.login(gmail_user, gmail_pwd)
        mailServer.sendmail(gmail_user, to, msg.as_string())
        mailServer.close()
-       print ('successfully sent the mail to %s' % to)
+       print ('%s - Successfully sent the mail to %s' % (datetime.datetime.now(), to))
     except Exception as e:
-       print ("failed to send mail %s" % str(e))
+       print ("%s - failed to send mail %s" % (datetime.datetime.now(), str(e)) )
 
 def parseArguments():
   import argparse
@@ -83,7 +82,7 @@ def parseArguments():
   parser.add_argument('--pass', required=True, help='Password')
   parser.add_argument('--to', required=True, help='To Mail')
   parser.add_argument('--subject', required=True, help='Subject')
-  text= 'Check out the attachment with Vacancies of SENAC in %s' % now
+  text= 'Check out the attachment with Vacancies of SENAC in %s' % datetime.datetime.now()
   parser.add_argument('--text', default=text, help='Text message')
   parser.add_argument('--json', required=True, help='Json FileName')
   return vars(parser.parse_args())

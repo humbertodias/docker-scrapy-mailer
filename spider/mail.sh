@@ -37,7 +37,7 @@ function checkRequiredVariables(){
 
 function scrapyAndSendMail(){
 	JSON_FILE_NAME="scrapy-$(date +'%Y-%m-%d_%T').json"
-	/usr/local/bin/scrapy runspider spider.py -o "$JSON_FILE_NAME"
+	/usr/local/bin/scrapy runspider spider.py -o "$JSON_FILE_NAME" --logfile /var/log/scrapy_spider.log
 	python mail.py \
 	--smtp_host "$MAIL_SMTP_HOST" \
 	--smtp_port "$MAIL_SMTP_PORT" \

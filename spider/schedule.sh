@@ -15,7 +15,9 @@ export MAIL_SUBJECT="$MAIL_SUBJECT"
 export MAIL_TEXT="$MAIL_TEXT"
 export CRON_SCHEDULE="$CRON_SCHEDULE"
 EOT
-
-crontab -l | { cat; echo "$CRON_SCHEDULE /root/mail.sh >> /var/log/cron_spider.log 2>&1"; } | crontab -
-
-cron -f
+LOG_FILE=/var/log/cron_spider.log
+> $LOG_FILE
+crontab -l | { cat; echo "$CRON_SCHEDULE /root/mail.sh >> $LOG_FILE 2>&1"; } | crontab -
+cron & 
+echo "Waiting for next schedule of cron [$CRON_SCHEDULE]"
+tail -f $LOG_FILE
