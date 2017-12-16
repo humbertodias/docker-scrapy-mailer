@@ -1,6 +1,6 @@
 # Docker Scrapy Mailer
 
-It's a Docker container that uses [scrapy](https://scrapy.org) library to grab and parse a website and generating parsable json file.
+It's a [Docker](https://www.docker.com) container that uses [scrapy](https://scrapy.org) library to grab and parse a website and generating parsable json file.
 After that we bind the json with a [mako](http://www.makotemplates.org) template, resulting in a dynamic mail content.
 Finally, we send it according to the MAIL_TO env variable.
 
@@ -31,9 +31,11 @@ docker run -e MAIL_FROM='from@mail' \
 ```
 
 
-To make your **CRON_SCHEDULE** exception easily use the serive (CronTab Generator)[https://crontab-generator.org]
+To make your **CRON_SCHEDULE** exception easily use the serive [CronTab Generator](https://crontab-generator.org)
 
 # References
+
+* [Docker](https://www.docker.com)
 
 * [CronTab Generator](https://crontab-generator.org)
 
