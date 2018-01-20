@@ -1,0 +1,19 @@
+FROM alpine
+
+RUN apk update \
+&& apk add python py2-pip apk-cron gcc python-dev  libffi-dev py-openssl musl-dev openssl-dev libxml2-dev libxslt-dev shadow \
+&& pip install --upgrade incremental && pip install scrapy service_identity mako --force --upgrade
+
+RUN adduser spider -h /home/spider -D
+
+#RUN echo "spider:spider" | chpasswd
+#RUN echo "root:root" | chpasswd
+
+ADD spider /home/spider
+WORKDIR /home/spider
+
+RUN chown spider /home/spider && gpasswd -a spider root && gpasswd -a root spider && chmod 4777 /var/run && chmod 4777 /var/log && chmod g+rwx /etc/crontabs -R && chmod 4755 /usr/sbin/crond && chmod g+rwx /home/spider/*
+
+USER spider
+
+CMD ["/home/spider/schedule.sh"]

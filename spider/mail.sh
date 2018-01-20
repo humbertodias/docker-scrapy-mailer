@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
-source /root/.bashrc
+. /home/spider/.bashrc
 
-function checkRequiredVariables(){
+checkRequiredVariables(){
 	exit_code=0
 	if [ -z "${MAIL_FROM}" ]; then
 	    echo "MAIL_FROM is unset or set to the empty string" 
@@ -35,9 +35,9 @@ function checkRequiredVariables(){
 	return $exit_code
 }
 
-function scrapyAndSendMail(){
+scrapyAndSendMail(){
 	JSON_FILE_NAME="scrapy-$(date +'%Y-%m-%d_%T').json"
-	/usr/local/bin/scrapy runspider spider.py -o "$JSON_FILE_NAME" --logfile /var/log/scrapy_spider.log
+	scrapy runspider spider.py -o "$JSON_FILE_NAME" --logfile /var/log/scrapy_spider.log
 	python mail.py \
 	--smtp_host "$MAIL_SMTP_HOST" \
 	--smtp_port "$MAIL_SMTP_PORT" \
@@ -50,7 +50,7 @@ function scrapyAndSendMail(){
 }
 
 checkRequiredVariables
-if [ "$?" == "0" ]; then
+if [ "$?" = "0" ]; then
 	scrapyAndSendMail
 else
 	echo "Some required variabled is unset"
