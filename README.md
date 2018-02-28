@@ -8,7 +8,7 @@ Finally, we send it according to the **MAIL_TO** informed environment variable.
 
 ## Pre Requirements
 
-1. [Docker](https://docs.docker.com/install)18+
+1. [Docker](https://docs.docker.com/install) 18+
 
 ## How to Run
 
