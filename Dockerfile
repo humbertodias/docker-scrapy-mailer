@@ -1,7 +1,7 @@
-FROM debian
+FROM python
 
 RUN apt update \
-&& apt install python python-pip cron dos2unix -y \
+&& apt install cron dos2unix -y \
 && pip install scrapy service_identity mako --force --upgrade
 
 RUN useradd spider -d /home/spider
