@@ -20,14 +20,20 @@ def loadTemplate(templateFileName, outFileName, vagas):
   else:
     mytemplaterendered = str(mytemplaterendered.strip())
 
+  mytemplaterendered = transformExternalCssToInline(mytemplaterendered)
+
   with open(outFileName, 'w', encoding='utf-8') as f:
        f.write(mytemplaterendered)
 
   return mytemplaterendered
 
-#import premailer
-#p = premailer.Premailer(mytemplaterendered)
-#mytemplaterendered = p.transform()     
+def transformExternalCssToInline(code):
+  import premailer
+  p = premailer.Premailer(code, strip_important=False, keep_style_tags=True,
+    remove_classes=False)
+  return p.transform()     
+
+
 
 # Send Mail
 def sendMail(mail_smtp_host, mail_smtp_port, gmail_user, gmail_pwd, to, subject, text, attachs=None):
