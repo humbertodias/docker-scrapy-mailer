@@ -20,7 +20,7 @@ def loadTemplate(templateFileName, outFileName, vagas):
   else:
     mytemplaterendered = str(mytemplaterendered.strip())
 
-  with open(outFileName, 'w') as f:
+  with open(outFileName, 'w', encoding='utf-8') as f:
        f.write(mytemplaterendered)
 
   return mytemplaterendered
