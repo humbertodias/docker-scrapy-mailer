@@ -8,7 +8,7 @@ Finally, we send it according to the **MAIL_TO** informed environment variable.
 
 ## Pre Requirements
 
-1. Docker
+1. [Docker](https://docs.docker.com/install)18+
 
 ## How to Run
 
@@ -41,8 +41,6 @@ Like
 ![](cron_schedule_format.png)
 
 ## References
-
-* [Docker](https://www.docker.com)
 
 * [CronTab Generator](https://crontab-generator.org)
 

@@ -57,6 +57,7 @@ def sendMail(mail_smtp_host, mail_smtp_port, gmail_user, gmail_pwd, to, subject,
        msg['To'] = to
        msg['Subject'] = subject
        msg.attach(MIMEText(text))
+#       msg.attach(MIMEText(text,'html'))
        if attachs:
           for attach in attachs:
             extension = attach.split(".")[-1]
@@ -96,7 +97,7 @@ def parseArguments():
 def main():
   args  = parseArguments()
   vagas = loadJSON(args['json'])
-  email = loadTemplate('email-template.mako', 'email.html', vagas)
+  html  = loadTemplate('email-template.mako', 'email.html', vagas)
   for to in args['to'].split(","):
     sendMail(args['smtp_host'], args['smtp_port'], args['from'], args['pass'], to, args['subject'], args['text'], [args['json'],"email.html"] )
 
