@@ -4,7 +4,7 @@ import scrapy
 # pip install scrapy
 
 # run it
-# scrapy runspider senac-vagas.py -o senac-vagas.json
+# scrapy runspider spider.py -o senac-vagas.json
 
 class SenacVagas(scrapy.Spider):
     name = 'SenacVagas'
@@ -12,10 +12,16 @@ class SenacVagas(scrapy.Spider):
     start_urls = [host + '_display.jsp']
 
     def parse(self, response):
-        listAHref = response.xpath("//a[contains(@href,'_display.jsp?app=mural/detalheNovo.jsp')]")
-        for i in range(0, len(listAHref), 3):
-            aHref  = self.host + listAHref[i].xpath("@href").extract_first().strip()
-            codigo = listAHref[i].xpath("./text()").extract_first().strip()
-            cargo  = listAHref[i+1].xpath("./text()").extract_first().strip()
-            vagas  = int(listAHref[i+2].xpath("./text()").extract_first().strip())
-            yield { "codigo" : codigo, "cargo": cargo, "vagas": vagas, "href": aHref }
+        listAHref = response.xpath("//span[contains(@id,'codVaga')]/..")
+        for i in range(0, len(listAHref)):
+            aHref = self.host
+            spans = listAHref[i].xpath("span")
+            titVaga = spans[0].xpath("text()").extract_first().strip()
+            codVaga = spans[1].xpath("text()").extract_first().strip()
+            codigo  = codVaga.split("-")[0].strip()
+            vagas = codVaga.split("-")[1].strip().split()[0]
+            cargo = titVaga
+
+            divLocal = listAHref[i].xpath("../div[2]")
+            local = divLocal.xpath("text()")[-1].extract().strip()
+            yield { "codigo" : codigo, "cargo": cargo, "vagas": vagas, "href": aHref, "local": local }
