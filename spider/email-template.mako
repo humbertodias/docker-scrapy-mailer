@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div class="alert alert-info">Banco de Talentos SENAC - ${now}</div>
+<div class="alert alert-info">Vagas em ${now}</div>
 
 <table class="table table-hover">
     <thead>

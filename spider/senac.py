@@ -4,7 +4,7 @@ import scrapy
 # pip install scrapy
 
 # run it
-# scrapy runspider spider.py -o senac-vagas.json
+# scrapy runspider senac.py -o senac.json
 
 class SenacVagas(scrapy.Spider):
     name = 'SenacVagas'

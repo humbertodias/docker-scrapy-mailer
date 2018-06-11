@@ -35,9 +35,9 @@ checkRequiredVariables(){
 	return $exit_code
 }
 
-scrapyAndSendMail(){
-	JSON_FILE_NAME="scrapy-$(date +'%Y-%m-%d_%T').json"
-	scrapy runspider spider.py -o "$JSON_FILE_NAME" --logfile /var/log/scrapy_spider.log
+scrapySenacAndSendMail(){
+	JSON_FILE_NAME="senac-$(date +'%Y-%m-%d_%T').json"
+	scrapy runspider senac.py -o "$JSON_FILE_NAME" --logfile /var/log/scrapy_spider.log
 	python3 mail.py \
 	--smtp_host "$MAIL_SMTP_HOST" \
 	--smtp_port "$MAIL_SMTP_PORT" \
@@ -47,6 +47,25 @@ scrapyAndSendMail(){
 	--subject "$MAIL_SUBJECT" \
 	--text "$MAIL_TEXT" \
 	--json "$JSON_FILE_NAME"
+}
+
+scrapyJnJAndSendMail(){
+	JSON_FILE_NAME="jnj-$(date +'%Y-%m-%d_%T').json"
+	scrapy runspider jnj.py -o "$JSON_FILE_NAME" --logfile /var/log/scrapy_spider.log
+	python3 mail.py \
+	--smtp_host "$MAIL_SMTP_HOST" \
+	--smtp_port "$MAIL_SMTP_PORT" \
+	--from "$MAIL_FROM" \
+	--pass "$MAIL_FROM_PASSWORD" \
+	--to "$MAIL_TO" \
+	--subject "$MAIL_SUBJECT" \
+	--text "$MAIL_TEXT" \
+	--json "$JSON_FILE_NAME"
+}
+
+scrapyAndSendMail(){
+	scrapySenacAndSendMail
+	scrapyJnJAndSendMail
 }
 
 checkRequiredVariables
